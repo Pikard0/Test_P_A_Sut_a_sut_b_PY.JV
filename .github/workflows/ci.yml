@@ -10,7 +10,25 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: rental_variant13_test
+          POSTGRES_USER: rental_student
+          POSTGRES_PASSWORD: rental
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rental_student -d rental_variant13_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: rental_variant13_test
+      DB_USER: rental_student
       DB_PASSWORD: rental
     steps:
       - name: Checkout repository
