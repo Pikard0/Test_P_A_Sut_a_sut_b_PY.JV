@@ -1,0 +1,4 @@
+profile,virtual_users,workflows,http_requests,duration_s,avg_response_ms,p95_response_ms,throughput_rps,error_rate_percent,p95_threshold_ms,error_rate_threshold_percent,accepted
+baseline,1,10,40,4.43,110.45,212.70,9.03,0.00,1000.00,1.00,true
+load,5,75,300,7.23,113.50,200.97,41.49,0.00,1000.00,1.00,true
+spike,20,100,400,6.68,312.06,553.04,59.87,0.00,1000.00,1.00,true

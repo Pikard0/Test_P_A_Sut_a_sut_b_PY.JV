@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="uk"><head><meta charset="utf-8"><title>Lab 7 performance report</title>
+<style>body{font-family:Arial,sans-serif;max-width:1000px;margin:32px auto;color:#172033}h1{margin-bottom:4px}.muted{color:#566}table{border-collapse:collapse;width:100%;margin:24px 0}th,td{border:1px solid #cbd5e1;padding:9px;text-align:left}th{background:#e2e8f0}.pass{color:#15803d;font-weight:bold}.fail{color:#b91c1c;font-weight:bold}.note{background:#eff6ff;padding:16px;border-left:4px solid #2563eb}svg{width:100%;height:240px;border:1px solid #cbd5e1;background:#fff}text{font-size:14px;fill:#172033}</style>
+</head><body>
+<h1>Лабка №7: Performance and Load Testing</h1>
+<p class="muted">Run 20261027020343686. Tool: Java HttpClient PerformanceTestRunner. API: local RentalApiServer with PostgreSQL.</p>
+<div class="note"><strong>Scenario:</strong> POST /rentals → GET /rentals/{id} → POST /rentals/{id}/return → GET /rentals/{id}. The id returned by POST is passed dynamically to each next request. Each workflow has a unique reference.</div>
+<h2>Workload profile</h2>
+<ul><li>Baseline: 1 virtual user, 10 workflows.</li><li>Load: 5 virtual users, 15 workflows per user.</li><li>Spike: 20 virtual users start simultaneously, 5 workflows per user, without ramp-up.</li></ul>
+<h2>Acceptance criteria</h2><p>p95 response time ≤ 1000 ms; error rate ≤ 1.0%.</p>
+<h2>Results</h2><table><thead><tr><th>Profile</th><th>VUs</th><th>Requests</th><th>Average</th><th>p95</th><th>Throughput</th><th>Error rate</th><th>Result</th></tr></thead><tbody><tr><td>baseline</td><td>1</td><td>40</td><td>93.08 ms</td><td>188.07 ms</td><td>10.72 rps</td><td>0.00%</td><td class="pass">PASS</td></tr><tr><td>load</td><td>5</td><td>300</td><td>113.20 ms</td><td>203.61 ms</td><td>42.54 rps</td><td>0.00%</td><td class="pass">PASS</td></tr><tr><td>spike</td><td>20</td><td>400</td><td>326.95 ms</td><td>530.67 ms</td><td>58.10 rps</td><td>0.00%</td><td class="pass">PASS</td></tr></tbody></table>
+<h2>p95 response time chart</h2><svg viewBox="0 0 760 240"><line x1="630.00" x2="630.00" y1="20" y2="225" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 5"/><text x="630.00" y="18">threshold 1000 ms</text><text x="10" y="72">baseline</text><rect x="120" y="55" width="95.91" height="26" fill="#15803d"/><text x="223.91468" y="73">188.07 ms</text><text x="10" y="127">load</text><rect x="120" y="110" width="103.84" height="26" fill="#15803d"/><text x="231.841967" y="128">203.61 ms</text><text x="10" y="182">spike</text><rect x="120" y="165" width="270.64" height="26" fill="#15803d"/><text x="398.64119" y="183">530.67 ms</text></svg>
+<h2>Interpretation</h2><p>The report compares response-time growth, throughput and error rate between minimal, normal and sudden peak load. See report.md for an automatically generated short conclusion.</p>
+</body></html>
