@@ -44,8 +44,22 @@ jobs:
       - name: Build
         run: mvn -B clean compile
 
+      - name: Prepare database schema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          PGPASSWORD="$DB_PASSWORD" psql \
+            -h "$DB_HOST" \
+            -p "$DB_PORT" \
+            -U "$DB_USER" \
+            -d "$DB_NAME" \
+            -f migrations/V1__create_tables.sql
+
       - name: Unit tests
         run: mvn -B -Pregression test
+
+      - name: Integration and API tests
+        run: mvn -B -Dtest=IntegrationTest,RentalApiIntegrationTest test
 
       - name: Integration tests
         if: always()

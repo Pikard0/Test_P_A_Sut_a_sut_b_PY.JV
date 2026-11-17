@@ -13,9 +13,9 @@ public final class FlakyDb {
     public static Connection connect() throws Exception {
         String host = System.getenv().getOrDefault("DB_HOST", "localhost");
         String port = System.getenv().getOrDefault("DB_PORT", "5432");
-        String name = System.getenv().getOrDefault("DB_NAME", "rental_variant13_test");
-        String user = System.getenv().getOrDefault("DB_USER", "rental_student");
-        String pass = System.getenv().getOrDefault("DB_PASSWORD", "");
+        String name = System.getenv().getOrDefault("DB_NAME", "rental");
+        String user = System.getenv().getOrDefault("DB_USER", "rental");
+        String pass = System.getenv().getOrDefault("DB_PASSWORD", "rental");
         return DriverManager.getConnection("jdbc:postgresql://" + host + ":" + port + "/" + name, user, pass);
     }
 
@@ -25,8 +25,14 @@ public final class FlakyDb {
             sql.execute("CREATE SCHEMA " + schema);
         }
         connection.setSchema(schema);
+        String migration = Files.readString(Path.of("migrations/V1__create_tables.sql"));
         try (var sql = connection.createStatement()) {
-            sql.execute(Files.readString(Path.of("migrations/V1__create_tables.sql")));
+            for (String statement : migration.split(";")) {
+                String trimmed = statement.trim();
+                if (!trimmed.isEmpty()) {
+                    sql.execute(trimmed);
+                }
+            }
         }
         return schema;
     }
