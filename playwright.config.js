@@ -13,7 +13,7 @@ module.exports = defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:8080',
     locale: 'uk-UA',
-    trace: 'retain-on-failure',
+    trace: 'on',
     screenshot: 'only-on-failure',
     video: 'on'
   },
