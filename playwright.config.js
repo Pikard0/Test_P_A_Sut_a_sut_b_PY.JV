@@ -15,7 +15,7 @@ module.exports = defineConfig({
     locale: 'uk-UA',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure'
+    video: 'on'
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
